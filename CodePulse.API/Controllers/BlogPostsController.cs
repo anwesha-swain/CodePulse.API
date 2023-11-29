@@ -49,7 +49,35 @@ namespace CodePulse.API.Controllers
                 UrlHandle = blogPost.UrlHandle
             };
 
-            return Ok();
+            return Ok(response);
+        }
+
+        //GET: {apibaseurl}/api/blogposts
+        [HttpGet]
+        public async Task<IActionResult> GetAllBlogPosts()
+        {
+            var blogPosts = await blogPostRepository.GetAllAsync();
+
+            //return Ok(blogPosts);    //if we use this single line we'll see the result, same as the result which will be shown by using the following codes. Which is correct & why ???
+
+            //convert domain model to dto
+            var response = new List<BlogPostDto>();
+            foreach (var blogPost in blogPosts)
+            {
+                response.Add(new BlogPostDto
+                {
+                    Id = blogPost.Id,
+                    Author = blogPost.Author,
+                    Content = blogPost.Content,
+                    FeaturedImageUrl = blogPost.FeaturedImageUrl,
+                    IsVisible = blogPost.IsVisible,
+                    PublishedDate = blogPost.PublishedDate,
+                    ShortDescription = blogPost.ShortDescription,
+                    Title = blogPost.Title,
+                    UrlHandle = blogPost.UrlHandle
+                });
+            }
+            return Ok(response);
         }
     }
 }
