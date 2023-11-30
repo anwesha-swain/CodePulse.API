@@ -113,7 +113,7 @@ namespace CodePulse.API.Controllers
 
         //Delete: https://localhost:7108/api/Categories/{id}
         [HttpDelete]
-        [Route("{id:Guid}")]
+        [Route("{id:Guid}")]             //Global Unique Identifier
         public async Task<IActionResult> DeleteCategory([FromRoute] Guid id)
         {
             var category = await categoryRepository.DeleteAsync(id);
